@@ -1,3 +1,5 @@
+package market;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,6 +19,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLStreamReader;
+
+import entity.InstrumentHistory;
 
 public class MarketBoard {
 	/**

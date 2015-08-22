@@ -1,5 +1,4 @@
-package market;
-
+package entity;
 
 public class DummyProfile {
 	double capital = 0;

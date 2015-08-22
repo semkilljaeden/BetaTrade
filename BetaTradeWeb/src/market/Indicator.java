@@ -1,4 +1,8 @@
+package market;
+
 import java.util.List;
+
+import entity.InstrumentHistory;
 
 public class Indicator {
 	/**
@@ -7,7 +11,7 @@ public class Indicator {
 	 * @return
 	 */
 	
-	protected static double getSMA(List<InstrumentHistory> list) {
+	public static double getSMA(List<InstrumentHistory> list) {
 		double sma = 0.0;
 		for(InstrumentHistory i : list) {
 			sma += i.getClose();
@@ -20,7 +24,7 @@ public class Indicator {
 	 * @return
 	 */
 	
-	protected static double getStandardDeviation(List<InstrumentHistory> list) {
+	public static double getStandardDeviation(List<InstrumentHistory> list) {
 		double sma = getSMA(list);
 		double deviation = 0.0;
 		for(InstrumentHistory i : list) {

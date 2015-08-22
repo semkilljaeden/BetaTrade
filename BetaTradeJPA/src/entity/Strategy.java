@@ -1,3 +1,5 @@
+package entity;
+
 import java.util.List;
 //@Entity
 //@Inheritance(strategy = InheritanceStrategy.SINGLE_TABLE)
@@ -53,7 +55,7 @@ public abstract class Strategy implements Runnable{
 	
 	public abstract void ifExit();
 	public abstract void makeTransaction(String symbol, double capital, double price);
-	protected void setCurrentPrice(double ask, double bid) {
+	public void setCurrentPrice(double ask, double bid) {
 		this.currentAsk = ask;
 		this.currentBid = bid;
 	}

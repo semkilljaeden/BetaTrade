@@ -1,4 +1,10 @@
+package strategy;
+
 import java.util.List;
+
+import entity.Strategy;
+import market.Indicator;
+import market.MarketBoard;
 
 public class BollingerBand extends Strategy {
 	/**
