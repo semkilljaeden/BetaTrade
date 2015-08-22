@@ -1,0 +1,2 @@
+data source: jdbc/BetaTrade
+sql schema: betatrade
