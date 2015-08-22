@@ -2,8 +2,8 @@
 #################
 ## Eclipse
 #################
-/**/.classpath
-/**/*.class
+**/.classpath
+**/*.class
 *.pydevproject
 .project
 .metadata
