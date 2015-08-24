@@ -2,7 +2,7 @@
 #################
 ## Eclipse
 #################
-**/.classpath
+
 **/*.class
 *.pydevproject
 .project

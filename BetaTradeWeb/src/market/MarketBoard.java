@@ -136,6 +136,8 @@ public class MarketBoard {
 	public List<CurrentQuote> getCurrentQuote(String symbol, int size) {
 		return quoteList.get(symbol).getQuotes(size);
 	}
-
+	public static void main(String[] args) {
+		new MarketBoard().getNewMarketData();
+	}
 }
 
