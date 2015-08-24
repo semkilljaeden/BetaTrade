@@ -2,6 +2,8 @@ package strategy;
 
 import java.util.List;
 
+import javax.mail.Flags.Flag;
+
 import entity.Strategy;
 import market.Indicator;
 import market.MarketBoard;
@@ -18,8 +20,8 @@ public class BollingerBand extends Strategy {
 	private double lowerBand;
 	
 	public BollingerBand() {
-		setHistory(new MarketBoard().getHistoryMarketData(period, 
-				new String[]{symbol}));
+		setHistories(new MarketBoard().getHistoryMarketData(period, 
+				new String[]{getSymbol()}));
 		SMA = Indicator.getSMA(getHistory());
 		double sd = Indicator.getStandardDeviation(getHistory());
 		upperBand = SMA + multiplier * sd;
@@ -29,40 +31,13 @@ public class BollingerBand extends Strategy {
 	public void run() {
 		// TODO Auto-generated method stub
 		if(capital == 0) return;
-		if(currentAsk > upperBand) {
-			makeTransaction(this.symbol, -(capital >= getTransactionLimit()? capital : getTransactionLimit()), currentAsk); 
+		if(currentBid > upperBand) {
+			flag = PurchaseFlag.SHORT;
 		}
-		else if(currentBid < lowerBand) {
-			makeTransaction(this.symbol, capital >= getTransactionLimit()? capital : getTransactionLimit(), currentBid);
+		else if(currentAsk < lowerBand) {
+			flag = PurchaseFlag.LONG;
 		}
 		ifExit();
-	}
-	/**
-	 * make an order for the stock
-	 * @param symbol
-	 * @param capital
-	 * @param price
-	 */
-	@Override
-	public void makeTransaction(String symbol, double capital, double price) {
-		int quantity = (int) (capital / price);
-		this.quantity += quantity;
-		this.capital += quantity * price;
-	}
-	/**
-	 * if exit position reached, return the capital to the strategy owner
-	 */
-	@Override
-	public void ifExit() {
-		if((capital - initialCapital) / initialCapital < getLossExitPosition()) {
-			p.incrementCapt(capital);
-			this.capital = 0;
-			//exit thread
-		}
-		if((capital - initialCapital) / initialCapital > getProfitExitPosition()) {
-			p.incrementCapt(capital);
-			this.capital = 0;
-		}
 	}
 	
 }

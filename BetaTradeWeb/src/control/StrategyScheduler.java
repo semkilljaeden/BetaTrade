@@ -28,7 +28,7 @@ public class StrategyScheduler implements Runnable{
 		// TODO Auto-generated method stub
 		List<CurrentQuote> quoteList;
 		for(Strategy s : getStrategyList()) {
-			s.setHistory(crawler.getHistoryMarketData(s.getPeriod(), 
+			s.setHistories(crawler.getHistoryMarketData(s.getPeriod(), 
 					new String[]{s.getSymbol()}));
 		}
 		while(true) {

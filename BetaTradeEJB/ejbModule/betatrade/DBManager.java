@@ -1,4 +1,4 @@
-package tradeservice;
+package betatrade;
 
 import java.util.List;
 

@@ -62,7 +62,7 @@ public class MarketBoard {
 	 * @param symbols how many stocks to get
 	 * @return list of instrument history of an instrument
 	 */
-	public List<InstrumentHistory> getHistoryMarketData(int days, String[] symbols) {
+	public List<InstrumentHistory> getHistoryMarketData(long days, String[] symbols) {
 		String query = MarketBoard.HIST_QUERY;
 		if(symbols == null) symbols = MarketBoard.STOCKLIST;
 		for(String symbol : symbols) {
@@ -72,7 +72,7 @@ public class MarketBoard {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		String currentDate = dateFormat.format(c.getTime());
-		c.add(Calendar.DATE, -days);
+		c.add(Calendar.DATE, (int) -days);
 		String prevDate = dateFormat.format(c.getTime());
 		hist_URL += "%20and%20startDate%20=%20%27" + prevDate 
 				+ "%27%20and%20endDate%20=%20%27" + currentDate + "%27";

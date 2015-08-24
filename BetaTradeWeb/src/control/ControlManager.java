@@ -16,7 +16,7 @@ import entity.UserAccount;
 import betatrade.DBManagerLocal;
 
 @Path("/betatrade")
-public class ControlManager {
+public class ControlManager{
 
 	@SuppressWarnings("unused")
 	@Context

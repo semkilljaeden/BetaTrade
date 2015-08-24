@@ -1,11 +1,14 @@
 package entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +24,17 @@ public class UserAccount {
 	private String createdDate; //contain the time stamp inside
 	private String closedDate;
 	
+	private List<Strategy> strategies;
 	
+	@OneToMany(mappedBy="user")
+	@OrderBy("id DESC")
+	public List<Strategy> getStrategies(){
+		return strategies;
+	}
 	
+	public void setStrategies(List<Strategy> strategies){
+		this.strategies = strategies;
+	}
 	
 	
 	@Override
@@ -68,7 +80,7 @@ public class UserAccount {
 	public Double getCashBalance() {
 		return cashBalance;
 	}
-	public void setCashBalance(Double cashBalance) {
+	public synchronized void setCashBalance(Double cashBalance) {
 		this.cashBalance = cashBalance;
 	}
 	public String getCreatedDate() {

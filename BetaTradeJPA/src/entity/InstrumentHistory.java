@@ -1,105 +1,118 @@
 package entity;
 
-import java.util.Date;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-@XmlAccessorType(XmlAccessType.FIELD)
-public class InstrumentHistory {
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-//	private Long id;
-//	@ManyToOne
-//	private Stock team;
+import java.io.Serializable;
+
+import javax.persistence.*;
+
+/**
+ * Entity implementation class for Entity: InstrumentHistory
+ *
+ */
+@Entity
+@Table(schema="betatrade", name="InstrumentHistory")
+public class InstrumentHistory implements Serializable {
+
 	
-    @XmlElement(name="Date")
-    @XmlSchemaType(name="date")
-    private Date date;
+	private static final long serialVersionUID = 1L;
 
-    @XmlAttribute(name="Symbol")
-    private String symbol;
-    
-    @XmlElement(name="Open")
-    private double open;
+	public InstrumentHistory() {
+		super();
+	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	private String date;
+	
+	
+	private Instrument instrument;
+   
+	private Double open;
+	
+	private Double high;
+	
+	private Double low;
+	
+	private Double close;
+	
+	private Double adjClose;
+	
+	private Long volume;
 
-    @XmlElement(name="High")
-    private double high;
+	public Long getId() {
+		return id;
+	}
 
-    @XmlElement(name="Low")
-    private double low;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @XmlElement(name="Close")
-    private double close;
-
-    @XmlElement(name="Volume")
-    private long volume;
-
-    @XmlElement(name="Adj_Close")
-    private double adjClose;
-
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public String getSymbol() {
-		return symbol;
+	@ManyToOne
+	@JoinColumn(name="symbol")
+	public Instrument getInstrument() {
+		return instrument;
 	}
 
-	public void setSymbol(String symbol) {
-		this.symbol = symbol;
+	public void setInstrument(Instrument instrument) {
+		this.instrument = instrument;
 	}
 
-	public double getOpen() {
+	public Double getOpen() {
 		return open;
 	}
 
-	public void setOpen(double open) {
+	public void setOpen(Double open) {
 		this.open = open;
 	}
 
-	public double getHigh() {
+	public Double getHigh() {
 		return high;
 	}
 
-	public void setHigh(double high) {
+	public void setHigh(Double high) {
 		this.high = high;
 	}
 
-	public double getLow() {
+	public Double getLow() {
 		return low;
 	}
 
-	public void setLow(double low) {
+	public void setLow(Double low) {
 		this.low = low;
 	}
 
-	public double getClose() {
+	public Double getClose() {
 		return close;
 	}
 
-	public void setClose(double close) {
+	public void setClose(Double close) {
 		this.close = close;
 	}
 
-	public long getVolume() {
-		return volume;
-	}
-
-	public void setVolume(long volume) {
-		this.volume = volume;
-	}
-
-	public double getAdjClose() {
+	public Double getAdjClose() {
 		return adjClose;
 	}
 
-	public void setAdjClose(double adjClose) {
+	public void setAdjClose(Double adjClose) {
 		this.adjClose = adjClose;
 	}
+
+	public Long getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Long volume) {
+		this.volume = volume;
+	}
+	
+	
 }
