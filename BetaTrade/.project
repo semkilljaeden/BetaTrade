@@ -3,9 +3,10 @@
 	<name>BetaTrade</name>
 	<comment></comment>
 	<projects>
-		<project>BetaTradeWeb</project>
 		<project>BetaTradeEJB</project>
 		<project>BetaTradeJPA</project>
+		<project>BetaTradeWeb</project>
+		<project>OrderBroker</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

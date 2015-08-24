@@ -1,0 +1,33 @@
+The OrderBroker component listens for trade requests on an ActiveMQ dynamic queue called "OrderBroker". Via JNDI this would be dynamicQueues/OrderBroker.
+
+It sends responses to "OrderBroker_Reply" -- but see below regarding correlation IDs and timing.
+
+Message format is almost the same in each direction. To place a trade order, send a text message bearing an XML representation of the requested trade, as in:
+
+<trade>
+  <buy>true</buy> <!-- so, false for a sale -->
+  <id>0</id>
+  <price>88.0</price>
+  <size>2000</size>
+  <stock>HON</stock>
+  <whenAsDate>2014-07-31T22:33:22.801-04:00</whenAsDate>
+</trade>
+
+All fields are required.
+
+The broker also looks for a JMS correlation ID, and bases response messaging on that:
+
+* If there is a correlation ID, the broker will set the same ID in a response message.
+
+* If there is no correlation ID, the broker logs a warning and doesn't send a response message. This allows for one-way trade requests as an option, perhaps for manual traders -- but isn't appropriate for your application.
+
+The response from the broker will be of the same XML format as above, except that there will be one additional child element under the <trade> element: a <result> with one of the following values:
+
+FILLED -- trade executed as requested
+
+PARTIALLY_FILLED -- trade executed with some number of shares less than requested -- and you can check the <size> element for the number
+
+REJECTED -- the trade was not executed
+
+Responses may be practically immediate, or may take up to 10 seconds, and actual time will vary, message-by-message, simulating real-world slowdowns.
+
