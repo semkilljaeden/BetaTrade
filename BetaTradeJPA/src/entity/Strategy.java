@@ -1,5 +1,6 @@
 package entity;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -38,12 +39,12 @@ public class Strategy implements Runnable{
 	 * 
 	 */
 	//@Column
-	protected String createdDate;
+	protected Date createdDate;
 	/**
 	 * 
 	 */
 	//@Column
-	protected String closedDate;
+	protected Date closedDate;
 	/**
 	 * 
 	 */
@@ -60,10 +61,10 @@ public class Strategy implements Runnable{
 	//@Column
 	protected Long quantity;
 	/**
-	 * max capital for this strategy to use
+	 * current cash left
 	 */
-	//@Column
-	protected Double capital;
+	@Column(name="capital")
+	protected Double cash;
 	/**
 	 * unit is day
 	 */
@@ -85,11 +86,6 @@ public class Strategy implements Runnable{
 	protected Double multiplier;
 	
 	
-	
-	protected long shortMAperiod; // TMA parameter second basis
-	protected long longMAperiod; // TMA parameter second basis
-
-	
 	//on fly
 	/**
 	 * buying price
@@ -99,37 +95,8 @@ public class Strategy implements Runnable{
 	 * selling price
 	 */
 	protected double currentBid;
-	protected List<InstrumentHistory> history;
-	public enum PurchaseFlag {LONG, SHORT, STAY}; // the flag set to long short or stay
-	protected PurchaseFlag flag;
 	
-	public void makeTransaction(String symbol, double capital, double price) {
-		int quantity = (int) (capital / price);
-		this.quantity += quantity;
-		this.capital += quantity * price;
-	}
 	
-	/**
-	 * make an order for the stock
-	 * @param symbol
-	 * @param capital
-	 * @param price
-	 */
-	/**
-	 * if exit position reached, return the capital to the strategy owner
-	 */
-	public void ifExit() {
-		if((capital - initialCapital) / initialCapital < getLossExitPosition()) {
-			user.setCashBalance(capital + user.getCashBalance());
-			this.capital = 0.0;
-			//exit thread
-		}
-		if((capital - initialCapital) / initialCapital > getProfitExitPosition()) {
-			user.setCashBalance(capital + user.getCashBalance());;
-			this.capital = 0.0;
-		}
-	}
-
 	
 	public Long getId() {
 		return id;
@@ -158,16 +125,16 @@ public class Strategy implements Runnable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(String createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public String getClosedDate() {
+	public Date getClosedDate() {
 		return closedDate;
 	}
-	public void setClosedDate(String closedDate) {
+	public void setClosedDate(Date closedDate) {
 		this.closedDate = closedDate;
 	}
 	public String getStatus() {
@@ -185,9 +152,6 @@ public class Strategy implements Runnable{
 	public void setInstrument(Instrument instrument) {
 		this.instrument = instrument;
 	}
-	public String getSymbol() {
-		return instrument.getSymbol();
-	}
 	public Long getQuantity() {
 		return quantity;
 	}
@@ -195,10 +159,10 @@ public class Strategy implements Runnable{
 		this.quantity = quantity;
 	}
 	public Double getCapital() {
-		return capital;
+		return cash;
 	}
 	public void setCapital(Double capital) {
-		this.capital = capital;
+		this.cash = capital;
 	}
 	public Long getPeriod() {
 		return period;
@@ -249,16 +213,44 @@ public class Strategy implements Runnable{
 		this.currentBid = currentBid;
 	}
 	
-	private List<InstrumentHistory> histories;
+	
+	/*
+	protected List<InstrumentHistory> history;
+	
+	public abstract void ifExit();
+	public abstract void makeTransaction(String symbol, double capital, double price);
+	public void setCurrentPrice(double ask, double bid) {
+		this.currentAsk = ask;
+		this.currentBid = bid;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		symbol = symbol;
+	}
+
+	public List<InstrumentHistory> getHistory() {
+		return history;
+	}
+
+	public void setHistory(List<InstrumentHistory> history) {
+		this.history = history;
+	}
+	*/
+	
+	
+	//public abstract void ifExit();
+	
+	//public abstract void makeTransaction(String symbol, double capital, double price);
 	
 	public void setCurrentPrice(double ask, double bid) {
 		this.currentAsk = ask;
 		this.currentBid = bid;
 	}
 
-	public List<InstrumentHistory> getHistory() {
-		return instrument.getHistories();
-	}
 
 	protected List<Transaction> transactions;
 	
@@ -271,14 +263,6 @@ public class Strategy implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public List<InstrumentHistory> getHistories() {
-		return histories;
-	}
-
-	public void setHistories(List<InstrumentHistory> histories) {
-		this.histories = histories;
 	}
 	
 }

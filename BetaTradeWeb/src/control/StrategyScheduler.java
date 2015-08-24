@@ -8,7 +8,7 @@ import entity.Strategy;
 import market.CurrentQuote;
 import market.MarketBoard;
 
-public class StrategyScheduler implements Runnable{
+public class StrategyScheduler implements Runnable, StrategySchedulerInterface{
 	/**
 	 * @author kiljaeden
 	 */
@@ -26,28 +26,7 @@ public class StrategyScheduler implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		List<CurrentQuote> quoteList;
-		for(Strategy s : getStrategyList()) {
-			s.setHistories(crawler.getHistoryMarketData(s.getPeriod(), 
-					new String[]{s.getSymbol()}));
-		}
-		while(true) {
-			quoteList = crawler.getNewMarketData();
-			for(CurrentQuote q : quoteList) {
-				Strategy s = strategyAccesser.get(q.getSymbol());
-				s.setCurrentPrice(q.getAsk(), q.getBid());
-			}
-			for(Strategy s : getStrategyList()) {
-				Thread t = new Thread(s);
-				t.start();
-			}
-			try {
-				Thread.sleep(MarketBoard.PULL_FREQUENCY);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 	}
 	public List<Strategy> getStrategyList() {
 		return strategyList;
@@ -57,11 +36,27 @@ public class StrategyScheduler implements Runnable{
 	 * @param strategyList
 	 */
 	public void setStrategyList(List<Strategy> strategyList) {
-		this.strategyList = strategyList;
-		strategyAccesser = new HashMap<>();
-		for(Strategy s : strategyList) {
-			strategyAccesser.put(s.getSymbol(), s);
-		}
+		
+	}
+	@Override
+	public String appendStrategyToList(Strategy s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String emptyStrategyList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String appendAllStrategiesToList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String killStrategy(String strategyId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

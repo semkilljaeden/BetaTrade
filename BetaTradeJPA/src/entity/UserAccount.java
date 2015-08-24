@@ -80,7 +80,7 @@ public class UserAccount {
 	public Double getCashBalance() {
 		return cashBalance;
 	}
-	public synchronized void setCashBalance(Double cashBalance) {
+	public void setCashBalance(Double cashBalance) {
 		this.cashBalance = cashBalance;
 	}
 	public String getCreatedDate() {

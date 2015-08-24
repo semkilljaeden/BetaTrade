@@ -66,12 +66,6 @@ public class Instrument implements Serializable {
 	protected String closedDate;
 
 	
-	protected List<InstrumentHistory> histories;
-	
-	@OneToMany(mappedBy="instrument")
-	public List<InstrumentHistory> getHistories(){
-		return histories;
-	}
 	
 	public String getSymbol() {
 		return symbol;
@@ -80,7 +74,7 @@ public class Instrument implements Serializable {
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
-
+	
 	public String getInstruName() {
 		return instruName;
 	}

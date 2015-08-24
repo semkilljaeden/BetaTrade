@@ -1,5 +1,7 @@
 package entity;
 
+import java.sql.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,7 +25,7 @@ public class Transaction {
 	private Double tradePrice;
 	private Long tradeSide;
 	private String mode;
-	private String createdDate;
+	private Date createdDate;
 
 	@ManyToOne
 	@JoinColumn(name="symbol")
@@ -66,10 +68,10 @@ public class Transaction {
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
-	public String getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(String createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 	
